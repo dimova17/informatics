@@ -18,7 +18,7 @@ if (isset($_GET['enter']))
 	$sql = "SELECT example_newsp.np_name, example_newsp.price, tipographia.tp_name, post.id_post, post.adress
         FROM example_newsp, tipographia, post
         WHERE example_newsp.tp_name = tipographia.tp_name AND example_newsp.id_post = post.id_post
-        AND example_newsp.np_name LIKE '%$np_name%' AND tipographia.tp_name LIKE '%$tp_name%";
+        AND example_newsp.np_name LIKE '%$np_name%' AND tipographia.tp_name LIKE '%$tp_name%'";
 
     $result = mysqli_query($link, $sql);
 	echo "<table border='1'>
