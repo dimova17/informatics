@@ -51,15 +51,21 @@ if (isset($_GET['red_by_id'])) {
     	    <p><input type='submit' name='enter' value='Сохранить'></p>
     	    </form>";
 
-    if (isset($_POST['tp_name'])) { 
+    if (isset($_GET['enter'])) { 
         $sql = mysql_query('UPDATE `example_newsp` SET '
-                .'`tp_name` = "'.$_POST['tp_name'].'",'
-                .'`id_post` = "'.$_POST['id_post'].'",'
-                .'`np_name` = "'.$_POST['np_name'].'",'
-                .'`price` = '.$_POST['price'].' '
+                .'`tp_name` = "'.$_GET['tp_name'].'",'
+                .'`id_post` = "'.$_GET['id_post'].'",'
+                .'`np_name` = "'.$_GET['np_name'].'",'
+                .'`price` = '.$_GET['price'].' '
                 .'WHERE `id_example` = '.$_GET['red_by_id']);
-        mysqli_close($link);
-        echo '<a href="list.php">Нажми меня, чтобы вернуться в таблице!</a>';
+        if (mysqli_query($link, $sql)) {
+            echo "Удаление прошло успешно!<br>";
+            mysqli_close($link);
+            echo '<a href="list.php">Нажми меня, чтобы вернуться в таблице!</a>';  
+        }
+        else{
+              echo "Кое-где ошибка<br>" . mysqli_error($link);
+        }
     }
 }
 
