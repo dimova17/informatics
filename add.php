@@ -16,7 +16,7 @@ $sql3 = "SELECT DISTINCT np_name
         FROM example_newsp";
 $result3 = mysqli_query($link, $sql3);
 
-echo "<form method='GET' action='add.php'>
+echo "<form method='POST' action='add.php'>
     <p>Выбрать типографию: <select name='tp_name'>";
 
 while($row = mysqli_fetch_array($result1))
@@ -41,7 +41,7 @@ echo "</select></p>
 	    <p><input type='submit' name='enter' value='Добавить'></p>
 	    </form>";
 
-if (isset($_POST['tp_name'])) { 
+if (isset($_POST['enter'])) { 
 	$tp = trim($_POST['tp_name']);
 	$np = trim($_POST['np_name']);
 	$post = trim($_POST['id_post']);
@@ -52,12 +52,13 @@ if (isset($_POST['tp_name'])) {
     $sql_add = "INSERT INTO example_newsp VALUES ( 
             '$tp','$post','$np','$date', $price')";
 	if (mysqli_query($link, $sql_add)) {
-	  echo "Вы добавили данные<br>";
-	  echo '<a href="list.php">Нажми меня, чтобы вернуться в таблице!</a>';
+        mysqli_close($link);
+	    echo "Вы добавили данные<br>";
+	    echo '<a href="list.php">Нажми меня, чтобы вернуться в таблице!</a>';
 	} else {
-	  echo "Ошибка с данными или с вами<br>" . mysqli_error($link);
+        echo "Ошибка с запросом или с вами<br>" . mysqli_error($link);
 	} 
 
 }
-mysqli_close($link);
+
 ?>
