@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once 'connection.php'; 
  
 $link = mysqli_connect($host, $user, $password, $database)
@@ -17,23 +17,25 @@ $sql3 = "SELECT DISTINCT np_name
 $result3 = mysqli_query($link, $sql3);
 
 echo "<form method='POST' action='add.php'>
-    <p>Выбрать типографию: <select name='tp_name'>";
-
+    <p>Выбрать типографию: <select name='tp_name'>
+    <option></option>";
 while($row = mysqli_fetch_array($result1))
     {
-    echo "<option value='$tp_name'>" . $row['tp_name'] . "</option>";
+    echo "<option>" . $row['tp_name'] . "</option>";
     } 
 echo "</select></p>
-    <p>Выбрать номер почтового отделения: <select name='id_post'>";
+    <p>Выбрать номер почтового отделения: <select name='id_post'>
+    <option></option>";
 while($row = mysqli_fetch_array($result2))
     {
-    echo "<option value='$id_post'>" . $row['id_post'] . "</option>";
+    echo "<option>" . $row['id_post'] . "</option>";
     }
 echo "</select></p>
-    <p>Изменить название газеты: <select name='np_name'>";
+    <p>Изменить название газеты: <select name='np_name'>
+    <option></option>";
 while($row = mysqli_fetch_array($result3))
     {
-    echo "<option value='$np_name'>" . $row['np_name'] . "</option>";
+    echo "<option>" . $row['np_name'] . "</option>";
     }
 echo "</select></p>
 		<p>Укажите дату выпуска в формате дд.мм.гггг: <input type='text' name='date_create' size='20'></p>
@@ -48,10 +50,11 @@ if (isset($_POST['enter'])) {
 	$date = trim($_POST['date_create']);
 	$price = trim($_POST['price']);
 
-
-    $sql_add = "INSERT INTO example_newsp VALUES ( 
-            '$tp','$post','$np','$date', $price')";
-	if (mysqli_query($link, $sql_add)) {
+    $sql_add = "INSERT INTO example_newsp (tp_name, id_post, np_name, date_create, price) VALUES ( 
+            '$tp','$post','$np','$date', '$price')";
+    $result = mysqli_query($link, $sql_add);
+    echo $sql_add;
+	if ($result) {
         mysqli_close($link);
 	    echo "Вы добавили данные<br>";
 	    echo '<a href="list.php">Нажми меня, чтобы вернуться в таблице!</a>';
